@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Auction.Data;
 using Auction.Data.Interfaces;
 using Auction.Data.Models;
 using Auction.Data.Repositories;
+using Auction.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -14,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Auction
 {
@@ -37,8 +40,11 @@ namespace Auction
             services.AddTransient<IBet, BetRepository>();
         }
  
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), Configuration["Logging:filePath"]);
+            loggerFactory.AddProvider(new FileLoggerProvider(filePath));
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
