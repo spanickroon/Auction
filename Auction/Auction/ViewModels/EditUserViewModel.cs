@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,8 +11,13 @@ namespace Auction.ViewModels
     {
         public string Id { get; set; }
         public string FullName { get; set; }
+        [Required]
+        [Display(Name = "Email")]
         public string Email { get; set; }
-        public string Password { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
         public string Gender { get; set; }
         public IFormFile Avatar { get; set; }
     }
