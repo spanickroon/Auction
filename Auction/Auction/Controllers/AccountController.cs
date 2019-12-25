@@ -132,7 +132,7 @@ namespace Auction.Controllers
                     {
                         user.PasswordHash = _passwordHasher.HashPassword(user, model.Password);
                         await _userManager.UpdateAsync(user);
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {

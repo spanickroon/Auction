@@ -18,6 +18,8 @@ namespace Auction.ViewModels
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
+        public string Password { get; set; }
+
         public string Gender { get; set; }
         public IFormFile Avatar { get; set; }
     }
