@@ -16,6 +16,7 @@ namespace Auction.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IUser _user;
+      
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IUser iUser)
         {
@@ -131,7 +132,7 @@ namespace Auction.Controllers
                     {
                         user.PasswordHash = _passwordHasher.HashPassword(user, model.Password);
                         await _userManager.UpdateAsync(user);
-                        return RedirectToAction("Index", "Account/Profile");
+                        return RedirectToAction("Index");
                     }
                     else
                     {
@@ -150,7 +151,6 @@ namespace Auction.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            // удаляем аутентификационные куки
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
