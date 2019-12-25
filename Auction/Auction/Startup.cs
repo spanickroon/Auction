@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Auction.Data;
+using Auction.Data.Interfaces;
+using Auction.Data.Models;
+using Auction.Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,25 +29,21 @@ namespace Auction
         {
             services.AddDbContext<AppDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AppDBContext>();
+            services.AddControllersWithViews();
+
+            services.AddTransient<IUser, UserRepository>();
+            services.AddTransient<ILot, LotRepository>();
+            services.AddTransient<IBet, BetRepository>();
         }
  
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
+            app.UseAuthentication();   
 
             app.UseEndpoints(endpoints =>
             {

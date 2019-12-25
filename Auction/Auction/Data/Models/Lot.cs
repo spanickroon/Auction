@@ -13,7 +13,6 @@ namespace Auction.Data.Models
         public int StartCost { get; set; }
         public int CurrentCost { get; set; }
         public byte[] AvatarLot { get; set; }
-        public string ImgUrlLot { get; set; }
         public DateTime DateLot { get; set; } = DateTime.Now;
         public int UserId { get; set; }
         public virtual User User { get; set; }

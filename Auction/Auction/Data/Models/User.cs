@@ -8,10 +8,8 @@ namespace Auction.Data.Models
     {
         public string FullName { get; set; }
         public string Gender { get; set; }
-        public string UserEmail { get; set; }
-        public int Balance { get; set; }
+        public int Balance { get; set; } = 1000;
         public byte[] Avatar { get; set; }
-        public string ImgUrl { get; set; }
         public DateTime DateRegistration { get; set; } = DateTime.Now;
         public List<Lot> Lots { get; set; }
     }

@@ -42,10 +42,8 @@ namespace Auction.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FullName = table.Column<string>(nullable: true),
                     Gender = table.Column<string>(nullable: true),
-                    UserEmail = table.Column<string>(nullable: true),
                     Balance = table.Column<int>(nullable: false),
                     Avatar = table.Column<byte[]>(nullable: true),
-                    ImgUrl = table.Column<string>(nullable: true),
                     DateRegistration = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -170,7 +168,6 @@ namespace Auction.Migrations
                     StartCost = table.Column<int>(nullable: false),
                     CurrentCost = table.Column<int>(nullable: false),
                     AvatarLot = table.Column<byte[]>(nullable: true),
-                    ImgUrlLot = table.Column<string>(nullable: true),
                     DateLot = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     UserId1 = table.Column<string>(nullable: true)
