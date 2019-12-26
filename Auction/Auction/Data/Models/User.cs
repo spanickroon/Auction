@@ -12,5 +12,6 @@ namespace Auction.Data.Models
         public byte[] Avatar { get; set; }
         public DateTime DateRegistration { get; set; } = DateTime.Now;
         public List<Lot> Lots { get; set; }
+        public List<Purchase> Purchases { get; set; }
     }
 }

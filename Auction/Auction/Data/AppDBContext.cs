@@ -11,7 +11,7 @@ namespace Auction.Data
     public class AppDBContext : IdentityDbContext<User>
     {
         public DbSet<Lot> Lots { get; set; }
-        public DbSet<Bet> Bets { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
 
         public AppDBContext(DbContextOptions<AppDBContext> options) : base(options)
         {
