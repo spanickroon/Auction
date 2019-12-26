@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Auction.Data.Interfaces
 {
-    interface IPurchase
+    public interface IPurchase
     {
         public void AddPurchaseDB(Purchase purchase);
         public IEnumerable<Purchase> AllPurchases();

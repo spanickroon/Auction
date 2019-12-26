@@ -18,5 +18,7 @@ namespace Auction.Data.Models
         public string UserId { get; set; }
         public string OwnerName { get; set; }
         public virtual User User { get; set; }
+        public string CustomerId { get; set; }
+        public string CustomerName { get; set; }
     }
 }

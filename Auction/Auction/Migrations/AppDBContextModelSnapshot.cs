@@ -19,38 +19,6 @@ namespace Auction.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Auction.Data.Models.Bet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Author")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CurrentBet")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateBet")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LotId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LotId1")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LotNane")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LotId1");
-
-                    b.ToTable("Bets");
-                });
-
             modelBuilder.Entity("Auction.Data.Models.Lot", b =>
                 {
                     b.Property<int>("Id")
@@ -63,6 +31,12 @@ namespace Auction.Migrations
 
                     b.Property<int>("CurrentCost")
                         .HasColumnType("int");
+
+                    b.Property<string>("CustomerId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateLot")
                         .HasColumnType("datetime2");
@@ -90,6 +64,50 @@ namespace Auction.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Lots");
+                });
+
+            modelBuilder.Entity("Auction.Data.Models.Purchase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<byte[]>("AvatarPurchase")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("CurrentCost")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DatePurchase")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Discription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OwnerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PurchaseName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Seller")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StartCost")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Purchases");
                 });
 
             modelBuilder.Entity("Auction.Data.Models.User", b =>
@@ -303,17 +321,17 @@ namespace Auction.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Auction.Data.Models.Bet", b =>
-                {
-                    b.HasOne("Auction.Data.Models.Lot", "Lot")
-                        .WithMany("Comments")
-                        .HasForeignKey("LotId1");
-                });
-
             modelBuilder.Entity("Auction.Data.Models.Lot", b =>
                 {
                     b.HasOne("Auction.Data.Models.User", "User")
                         .WithMany("Lots")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Auction.Data.Models.Purchase", b =>
+                {
+                    b.HasOne("Auction.Data.Models.User", "User")
+                        .WithMany("Purchases")
                         .HasForeignKey("UserId");
                 });
 

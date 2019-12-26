@@ -31,6 +31,8 @@
     @if (lot.CurrentCost != 0)
     {
         <h3>@lot.CurrentCost </h3>
+        <label>Last bet:</label>
+        <h3>@lot.CustomerName </h3>
     }
     else
     {
@@ -42,13 +44,25 @@
     <label>Date:</label>
     <h3>@lot.DateLot</h3>
 
-    <a class="btn btn-warning" style="color:white" asp-controller="Lot" asp-action="EditLot" asp-route-id="@lot.Id">Edit</a>
-    <form style="width:100%" asp-controller="Lot" asp-action="DeleteLot" asp-route-id="@lot.Id" method="post">
-        <button style="width:100%" type="submit" class="btn btn-danger">
-            Delete
-        </button>
-    </form>
-    <a class="btn btn-dark" style="color:white">More details</a>
+    @if (lot.Status)
+    {
+        <a class="btn btn-warning" style="color:white" asp-controller="Lot" asp-action="EditLot" asp-route-id="@lot.Id">Edit</a>
+        <form style="width:100%" asp-controller="Lot" asp-action="DeleteLot" asp-route-id="@lot.Id" method="post">
+            <button style="width:100%" type="submit" class="btn btn-danger">
+                Delete
+            </button>
+        </form>
+        <a class="btn btn-dark" style="color:white">Active</a>
+        @if (!(lot.CustomerId is null))
+        {
+            <a class="btn btn-success" style="color:white">Sell for @lot.CurrentCost $</a>
+        }
+    }
+    else
+    {
+        <a class="btn btn-dark" style="color:white">Not active</a>
+    }
+
 </div>
     <br />
 }

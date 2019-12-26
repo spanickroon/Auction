@@ -18,6 +18,7 @@ namespace Auction.Data.Models
         public bool Status { get; set; }
         public DateTime DatePurchase { get; set; } = DateTime.Now;
         public string UserId { get; set; }
+        public string Seller { get; set; }
         public string OwnerName { get; set; }
         public virtual User User { get; set; }
     }

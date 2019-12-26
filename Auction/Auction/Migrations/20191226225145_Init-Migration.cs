@@ -171,7 +171,9 @@ namespace Auction.Migrations
                     Status = table.Column<bool>(nullable: false),
                     DateLot = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
-                    OwnerName = table.Column<string>(nullable: true)
+                    OwnerName = table.Column<string>(nullable: true),
+                    CustomerId = table.Column<string>(nullable: true),
+                    CustomerName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -185,25 +187,29 @@ namespace Auction.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Bets",
+                name: "Purchases",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Author = table.Column<string>(nullable: true),
-                    CurrentBet = table.Column<int>(nullable: false),
-                    DateBet = table.Column<DateTime>(nullable: false),
-                    LotId = table.Column<string>(nullable: true),
-                    LotNane = table.Column<string>(nullable: true),
-                    LotId1 = table.Column<int>(nullable: true)
+                    PurchaseName = table.Column<string>(nullable: true),
+                    Discription = table.Column<string>(nullable: true),
+                    StartCost = table.Column<int>(nullable: false),
+                    CurrentCost = table.Column<int>(nullable: false),
+                    AvatarPurchase = table.Column<byte[]>(nullable: true),
+                    Status = table.Column<bool>(nullable: false),
+                    DatePurchase = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    Seller = table.Column<string>(nullable: true),
+                    OwnerName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bets", x => x.Id);
+                    table.PrimaryKey("PK_Purchases", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Bets_Lots_LotId1",
-                        column: x => x.LotId1,
-                        principalTable: "Lots",
+                        name: "FK_Purchases_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -248,13 +254,13 @@ namespace Auction.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bets_LotId1",
-                table: "Bets",
-                column: "LotId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Lots_UserId",
                 table: "Lots",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Purchases_UserId",
+                table: "Purchases",
                 column: "UserId");
         }
 
@@ -276,13 +282,13 @@ namespace Auction.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Bets");
+                name: "Lots");
+
+            migrationBuilder.DropTable(
+                name: "Purchases");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Lots");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

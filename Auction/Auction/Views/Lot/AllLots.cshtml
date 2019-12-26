@@ -5,6 +5,8 @@
 
 @foreach (var lot in Model)
 {
+    @if (lot.Status)
+    {
     <div class="card" style="height: auto; width: 500px; text-align: center; margin-left:auto; margin-right:auto">
 
         @if (lot.AvatarLot is null)
@@ -28,6 +30,8 @@
         @if (lot.CurrentCost != 0)
         {
             <h3>@lot.CurrentCost </h3>
+            <label>Last bet:</label>
+            <h3>@lot.CustomerName </h3>
         }
         else
         {
@@ -38,8 +42,12 @@
 
         <label>Date:</label>
         <h3>@lot.DateLot</h3>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a class="btn btn-dark" style="color:white">Make a bet</a>
+        }
 
-        <a class="btn btn-dark" style="color:white">More details</a>
     </div>
-    <br />
+        <br />
+    }
 }

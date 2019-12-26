@@ -18,12 +18,14 @@ namespace Auction.Controllers
         UserManager<User> _userManager;
         private readonly IUser _user;
         private readonly ILot _lot;
+        private readonly IPurchase _purchase;
 
-        public LotController(UserManager<User> userManager, IUser iUser, ILot iLot)
+        public LotController(UserManager<User> userManager, IUser iUser, ILot iLot, IPurchase iPurchase)
         {
             _user = iUser;
             _lot = iLot;
             _userManager = userManager;
+            _purchase = iPurchase;
         }
         public IActionResult CreateLot()
         {
@@ -50,6 +52,54 @@ namespace Auction.Controllers
         {
             return View(_lot.MyLot(_user.GetUserDB(_userManager.GetUserId(User))));
         }
+        public IActionResult MyPucheses()
+        {
+            return View(_purchase.MyPurchase(_user.GetUserDB(_userManager.GetUserId(User))));
+        }
+
+        [HttpPost]
+        public IActionResult MakeTransaction(int id)
+        {
+            Lot lot = _lot.GetLotDB(id);
+            User seller = _user.GetUserDB(lot.UserId);
+            User customer = _user.GetUserDB(_userManager.GetUserId(User));
+            string a = _userManager.GetUserId(User);
+
+            Purchase purchase = new Purchase
+            {
+                PurchaseName = lot.LotName,
+                Discription = lot.Discription,
+                StartCost = lot.StartCost,
+                AvatarPurchase = lot.AvatarLot,
+                Seller = lot.OwnerName,
+                User = _user.GetUserDB(_userManager.GetUserId(User)),
+                UserId = _userManager.GetUserId(User),
+                OwnerName = User.Identity.Name,
+                Status = false,
+            };
+            seller.Balance += lot.CurrentCost;
+            customer.Balance -= lot.CurrentCost;
+            lot.Status = false;
+            _purchase.AddPurchaseDB(purchase);
+
+            return RedirectToAction("MyLots", "Lot");
+        }
+
+        [HttpPost]
+        public IActionResult MakeBet(int id)
+        {
+            Lot lot = _lot.GetLotDB(id);
+            User seller = _user.GetUserDB(lot.UserId);
+            User customer = _user.GetUserDB(_userManager.GetUserId(User));
+
+            lot.CurrentCost += (lot.StartCost / 10);
+            lot.CustomerId = _userManager.GetUserId(User);
+            lot.CustomerName = User.Identity.Name;
+
+            lot.Status = false;
+
+            return RedirectToAction("MyLots", "Lot");
+        }
 
         [HttpPost]
         public IActionResult CreateLot(LotViewModel model)
@@ -68,10 +118,12 @@ namespace Auction.Controllers
                 LotName = model.LotName,
                 Discription = model.Discription,
                 StartCost = model.StartCost,
+                CurrentCost = model.StartCost,
                 AvatarLot = imageData,
                 User = _user.GetUserDB(_userManager.GetUserId(User)),
                 UserId = _userManager.GetUserId(User),
                 OwnerName = User.Identity.Name,
+                Status = true,
             };
             _lot.AddLotDB(lot);
 
@@ -93,8 +145,8 @@ namespace Auction.Controllers
                 Id = lot.Id,
                 LotName = lot.LotName,
                 Discription = lot.Discription,
-                StartCost = lot.StartCost
-            };
+                StartCost = lot.StartCost,
+        };
             return View(model);
         }
 

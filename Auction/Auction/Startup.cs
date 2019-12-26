@@ -37,7 +37,7 @@ namespace Auction
 
             services.AddTransient<IUser, UserRepository>();
             services.AddTransient<ILot, LotRepository>();
-            services.AddTransient<IBet, BetRepository>();
+            services.AddTransient<IPurchase, PurchaseRepository>();
         }
  
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
