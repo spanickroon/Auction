@@ -45,6 +45,7 @@ namespace Auction
             string filePath = Path.Combine(Directory.GetCurrentDirectory(), Configuration["Logging:filePath"]);
             loggerFactory.AddProvider(new FileLoggerProvider(filePath));
 
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
