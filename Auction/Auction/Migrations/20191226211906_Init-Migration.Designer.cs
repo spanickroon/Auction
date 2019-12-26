@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Auction.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20191226175745_Init-Migration")]
+    [Migration("20191226211906_Init-Migration")]
     partial class InitMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,12 +37,18 @@ namespace Auction.Migrations
                     b.Property<DateTime>("DateBet")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("LotId")
+                    b.Property<string>("LotId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("LotId1")
                         .HasColumnType("int");
+
+                    b.Property<string>("LotNane")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LotId");
+                    b.HasIndex("LotId1");
 
                     b.ToTable("Bets");
                 });
@@ -69,21 +75,21 @@ namespace Auction.Migrations
                     b.Property<string>("LotName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("OwnerName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("StartCost")
                         .HasColumnType("int");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Lots");
                 });
@@ -303,16 +309,14 @@ namespace Auction.Migrations
                 {
                     b.HasOne("Auction.Data.Models.Lot", "Lot")
                         .WithMany("Comments")
-                        .HasForeignKey("LotId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LotId1");
                 });
 
             modelBuilder.Entity("Auction.Data.Models.Lot", b =>
                 {
                     b.HasOne("Auction.Data.Models.User", "User")
                         .WithMany("Lots")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

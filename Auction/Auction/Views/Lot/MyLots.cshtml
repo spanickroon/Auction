@@ -25,7 +25,7 @@
     <h3>@lot.Discription</h3>
 
     <label>Seller:</label>
-    <h3>@lot.User</h3>
+    <h3>@lot.OwnerName</h3>
 
     <label>Current cost:</label>
     @if (lot.CurrentCost != 0)
@@ -42,7 +42,7 @@
     <label>Date:</label>
     <h3>@lot.DateLot</h3>
 
-    <a class="btn btn-warning" style="color:white"  asp-controller="Lot" asp-action="EditLot" asp-route-id="@lot.Id">Edit</a>
+    <a class="btn btn-warning" style="color:white" asp-controller="Lot" asp-action="EditLot" asp-route-id="@lot.Id">Edit</a>
     <form style="width:100%" asp-controller="Lot" asp-action="DeleteLot" asp-route-id="@lot.Id" method="post">
         <button style="width:100%" type="submit" class="btn btn-danger">
             Delete

@@ -170,15 +170,15 @@ namespace Auction.Migrations
                     AvatarLot = table.Column<byte[]>(nullable: true),
                     Status = table.Column<bool>(nullable: false),
                     DateLot = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    UserId1 = table.Column<string>(nullable: true)
+                    UserId = table.Column<string>(nullable: true),
+                    OwnerName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Lots", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Lots_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Lots_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -193,17 +193,19 @@ namespace Auction.Migrations
                     Author = table.Column<string>(nullable: true),
                     CurrentBet = table.Column<int>(nullable: false),
                     DateBet = table.Column<DateTime>(nullable: false),
-                    LotId = table.Column<int>(nullable: false)
+                    LotId = table.Column<string>(nullable: true),
+                    LotNane = table.Column<string>(nullable: true),
+                    LotId1 = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Bets_Lots_LotId",
-                        column: x => x.LotId,
+                        name: "FK_Bets_Lots_LotId1",
+                        column: x => x.LotId1,
                         principalTable: "Lots",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -246,14 +248,14 @@ namespace Auction.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bets_LotId",
+                name: "IX_Bets_LotId1",
                 table: "Bets",
-                column: "LotId");
+                column: "LotId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Lots_UserId1",
+                name: "IX_Lots_UserId",
                 table: "Lots",
-                column: "UserId1");
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

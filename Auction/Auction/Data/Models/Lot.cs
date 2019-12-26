@@ -15,7 +15,8 @@ namespace Auction.Data.Models
         public byte[] AvatarLot { get; set; }
         public bool Status { get; set; }
         public DateTime DateLot { get; set; } = DateTime.Now;
-        public int UserId { get; set; }
+        public string UserId { get; set; }
+        public string OwnerName { get; set; }
         public virtual User User { get; set; }
         public List<Bet> Comments { get; set; }
     }

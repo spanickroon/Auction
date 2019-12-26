@@ -51,7 +51,7 @@ namespace Auction.Controllers
                     await _signInManager.SignInAsync(user, false);
                     EmailSendingService emailService = new EmailSendingService(Configuration);
                     await emailService.SendEmailAsync(model.Email,  "Registration", "Thank for register");
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("AllLots", "");
                 }
                 else
                 {
@@ -87,7 +87,7 @@ namespace Auction.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("AllLots", "");
                     }
                 }
                 else
@@ -138,7 +138,7 @@ namespace Auction.Controllers
                     {
                         user.PasswordHash = _passwordHasher.HashPassword(user, model.Password);
                         await _userManager.UpdateAsync(user);
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("AllLots", "");
                     }
                     else
                     {
@@ -158,7 +158,7 @@ namespace Auction.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("AllLots", "");
         }
     }
 }

@@ -13,7 +13,8 @@ namespace Auction.Data.Models
         public string Author { get; set; }
         public int CurrentBet { get; set; }
         public DateTime DateBet { get; set; } = DateTime.Now;
-        public int LotId { get; set; }
+        public string LotId { get; set; }
+        public string LotNane { get; set; }
         public virtual Lot Lot { get; set; }
     }
 }

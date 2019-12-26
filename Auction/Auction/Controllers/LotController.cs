@@ -70,6 +70,8 @@ namespace Auction.Controllers
                 StartCost = model.StartCost,
                 AvatarLot = imageData,
                 User = _user.GetUserDB(_userManager.GetUserId(User)),
+                UserId = _userManager.GetUserId(User),
+                OwnerName = User.Identity.Name,
             };
             _lot.AddLotDB(lot);
 
