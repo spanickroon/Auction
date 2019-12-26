@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Auction.Data.Interfaces;
 using System.IO;
+using Auction.Services;
+using Microsoft.Extensions.Configuration;
 
 namespace Auction.Controllers
 {
@@ -16,13 +18,14 @@ namespace Auction.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IUser _user;
-      
+        public IConfiguration Configuration { get; set; }
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IUser iUser)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IUser iUser, IConfiguration conf)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _user = iUser;
+            Configuration = conf;
         }
 
         public IActionResult Profile()
@@ -46,6 +49,8 @@ namespace Auction.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, false);
+                    EmailSendingService emailService = new EmailSendingService(Configuration);
+                    await emailService.SendEmailAsync(model.Email,  "Registration", "Thank for register");
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -74,7 +79,8 @@ namespace Auction.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
-               
+                    EmailSendingService emailService = new EmailSendingService(Configuration);
+                    await emailService.SendEmailAsync(model.Email, "Login", "Welcome");
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                     {
                         return Redirect(model.ReturnUrl);
