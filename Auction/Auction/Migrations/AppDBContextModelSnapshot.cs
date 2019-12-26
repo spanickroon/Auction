@@ -64,11 +64,14 @@ namespace Auction.Migrations
                     b.Property<string>("Discription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PublicationName")
+                    b.Property<string>("LotName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StartCost")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");

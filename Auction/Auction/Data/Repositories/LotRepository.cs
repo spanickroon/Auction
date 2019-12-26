@@ -14,7 +14,7 @@ namespace Auction.Data.Repositories
         {
             this._appDbContext = appDbContext;
         }
-        public void AddPublicationDB(Lot lot)
+        public void AddLotDB(Lot lot)
         {
             _appDbContext.Lots.Add(lot);
             _appDbContext.SaveChanges();

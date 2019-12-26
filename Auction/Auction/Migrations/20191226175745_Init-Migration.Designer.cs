@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Auction.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20191224230938_Initial_Create")]
-    partial class Initial_Create
+    [Migration("20191226175745_Init-Migration")]
+    partial class InitMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,11 +66,14 @@ namespace Auction.Migrations
                     b.Property<string>("Discription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PublicationName")
+                    b.Property<string>("LotName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StartCost")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");

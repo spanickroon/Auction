@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Auction.Migrations
 {
-    public partial class Initial_Create : Migration
+    public partial class InitMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -163,11 +163,12 @@ namespace Auction.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PublicationName = table.Column<string>(nullable: true),
+                    LotName = table.Column<string>(nullable: true),
                     Discription = table.Column<string>(nullable: true),
                     StartCost = table.Column<int>(nullable: false),
                     CurrentCost = table.Column<int>(nullable: false),
                     AvatarLot = table.Column<byte[]>(nullable: true),
+                    Status = table.Column<bool>(nullable: false),
                     DateLot = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     UserId1 = table.Column<string>(nullable: true)

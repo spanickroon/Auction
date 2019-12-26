@@ -5,7 +5,7 @@ namespace Auction.Data.Interfaces
 {
     public interface ILot
     {
-        public void AddPublicationDB(Lot lot);
+        public void AddLotDB(Lot lot);
         public IEnumerable<Lot> AllLots();
         public IEnumerable<Lot> MyLot(User user);
         public Lot GetLotDB(int id);
