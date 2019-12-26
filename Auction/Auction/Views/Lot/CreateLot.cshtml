@@ -1,0 +1,36 @@
+﻿@model Auction.ViewModels.LotViewModel
+
+@{
+    ViewData["Title"] = "CreatePost";
+}
+
+<div class="text-center container col-4">
+    <h1>Create lot</h1>
+    <form method="post" asp-controller="Lot" asp-action="CreateLot" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div>
+            <label asp-for="LotName"></label><br />
+            <input asp-for="LotName" />
+            <span asp-validation-for="LotName"></span>
+        </div>
+        <div>
+            <label asp-for="Discription"></label><br />
+            <input asp-for="Discription" />
+            <span asp-validation-for="Discription"></span>
+        </div>
+        <div>
+            <label asp-for="StartCost"></label><br />
+            <input asp-for="StartCost" />
+            <span asp-validation-for="StartCost"></span>
+        </div>
+        <div class="form-group">
+            <p>
+                <label>Photo</label>
+                <input name="AvatarLot" type="file" class="form-control" />
+            </p>
+        </div>
+        <div class="">
+            <input class="btn btn-sm btn-primary btn-block" type="submit" value="Create" />
+        </div>
+    </form>
+</div>

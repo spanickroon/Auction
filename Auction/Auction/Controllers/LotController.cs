@@ -73,7 +73,7 @@ namespace Auction.Controllers
             };
             _lot.AddLotDB(lot);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("MyLots", "Lot");
         }
 
         [HttpGet]
@@ -102,16 +102,22 @@ namespace Auction.Controllers
             if (ModelState.IsValid)
             {
                 Lot lot = _lot.GetLotDB(model.Id);
+                byte[] imageData = null;
+
+                using (var binaryReader = new BinaryReader(model.AvatarLot.OpenReadStream()))
+                {
+                    imageData = binaryReader.ReadBytes((int)model.AvatarLot.Length);
+                }
 
                 if (lot != null)
                 {
                     lot.LotName = model.LotName;
                     lot.Discription = model.Discription;
-                    lot.Discription = lot.Discription;
-                    lot.StartCost = lot.StartCost;
+                    lot.StartCost = model.StartCost;
+                    lot.AvatarLot = imageData;
                     _lot.UpdateLot(lot);
 
-                    return RedirectToAction("Index");
+                    return RedirectToAction("MyLots", "Lot");
                 }
             }
             return View(model);
@@ -125,7 +131,7 @@ namespace Auction.Controllers
                 _lot.DeleteLot(lot);
 
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("MyLots", "Lot");
         }
     }
 }

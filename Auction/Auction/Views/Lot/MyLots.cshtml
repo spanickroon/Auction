@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Auction.Data.Models.Lot>
+@{
+    ViewData["Title"] = "MyLots";
+}
+
+<h1 class="text-center">My Lots</h1>
+<a class="btn btn-success" style="color:white;" asp-area="" asp-controller="Lot" asp-action="CreateLot">Add new lot</a>
+
+@foreach (var lot in Model)
+{
+<div class="card" style="height: auto; width: 500px; text-align: center; margin-left:auto; margin-right:auto">
+
+    @if (lot.AvatarLot is null)
+    {
+        <h4>No photo</h4>
+    }
+    else
+    {
+        <img style="" width:100%" src="data:image/jpeg;base64,@(Convert.ToBase64String(lot.AvatarLot))" alt="" class="card-img" />
+    }
+    <label>Name:</label>
+    <h1>@lot.LotName</h1>
+
+    <label>Discription:</label>
+    <h3>@lot.Discription</h3>
+
+    <label>Seller:</label>
+    <h3>@lot.User</h3>
+
+    <label>Current cost:</label>
+    @if (lot.CurrentCost != 0)
+    {
+        <h3>@lot.CurrentCost </h3>
+    }
+    else
+    {
+        <h3>@lot.StartCost $</h3>
+    }
+    <label>Start Cost:</label>
+    <h3>@lot.StartCost $</h3>
+
+    <label>Date:</label>
+    <h3>@lot.DateLot</h3>
+
+    <a class="btn btn-warning" style="color:white"  asp-controller="Lot" asp-action="EditLot" asp-route-id="@lot.Id">Edit</a>
+    <form style="width:100%" asp-controller="Lot" asp-action="DeleteLot" asp-route-id="@lot.Id" method="post">
+        <button style="width:100%" type="submit" class="btn btn-danger">
+            Delete
+        </button>
+    </form>
+    <a class="btn btn-dark" style="color:white">More details</a>
+</div>
+    <br />
+}

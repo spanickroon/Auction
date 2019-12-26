@@ -1,0 +1,29 @@
+﻿@model Auction.ViewModels.LotViewModel
+@{
+    ViewData["Title"] = "EditLot";
+}
+<form asp-action="EditLot" asp-controller="Lot" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="LotName" class="control-label">Lot Name:</label>
+        <input type="text" asp-for="LotName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Discription" class="control-label">Discription:</label>
+        <input type="text" asp-for="Discription" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StartCost" class="control-label">Start Cost:</label>
+        <input type="text" asp-for="StartCost" class="form-control" />
+    </div>
+    <div class="form-group">
+        <p>
+            <input name="AvatarLot" type="file" class="form-control" />
+        </p>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-outline-secondary" />
+    </div>
+</form>
+
