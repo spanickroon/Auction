@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SignalRApp;
 
 namespace Auction
 {
@@ -38,6 +39,7 @@ namespace Auction
             services.AddTransient<IUser, UserRepository>();
             services.AddTransient<ILot, LotRepository>();
             services.AddTransient<IPurchase, PurchaseRepository>();
+            services.AddSignalR();
         }
  
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -57,6 +59,7 @@ namespace Auction
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Lot}/{action=AllLots}/{id?}");
+                endpoints.MapHub<ChatHub>("/Chat");
             });
         }
     }

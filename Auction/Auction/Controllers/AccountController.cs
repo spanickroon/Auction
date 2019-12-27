@@ -49,8 +49,8 @@ namespace Auction.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, false);
-                    EmailSendingService emailService = new EmailSendingService(Configuration);
-                    await emailService.SendEmailAsync(model.Email,  "Registration", "Thank for register");
+                    //EmailSendingService emailService = new EmailSendingService(Configuration);
+                    //await emailService.SendEmailAsync(model.Email,  "Registration", "Thank for register");
                     return RedirectToAction("AllLots", "");
                 }
                 else
@@ -79,8 +79,8 @@ namespace Auction.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    EmailSendingService emailService = new EmailSendingService(Configuration);
-                    await emailService.SendEmailAsync(model.Email, "Login", "Welcome");
+                    //EmailSendingService emailService = new EmailSendingService(Configuration);
+                    //await emailService.SendEmailAsync(model.Email, "Login", "Welcome");
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                     {
                         return Redirect(model.ReturnUrl);
