@@ -52,17 +52,18 @@ namespace Auction.Controllers
         {
             return View(_lot.MyLot(_user.GetUserDB(_userManager.GetUserId(User))));
         }
-        public IActionResult MyPucheses()
+        public IActionResult MyPurchases()
         {
             return View(_purchase.MyPurchase(_user.GetUserDB(_userManager.GetUserId(User))));
         }
 
         [HttpPost]
-        public IActionResult MakeTransaction(int id)
+        public async Task<IActionResult> MakeTransaction(int id)
         {
             Lot lot = _lot.GetLotDB(id);
-            User seller = _user.GetUserDB(lot.UserId);
-            User customer = _user.GetUserDB(_userManager.GetUserId(User));
+            User seller = await _userManager.FindByIdAsync(lot.UserId);
+            User customer = await _userManager.FindByIdAsync(lot.CustomerId);
+        
             string a = _userManager.GetUserId(User);
 
             Purchase purchase = new Purchase
@@ -70,17 +71,22 @@ namespace Auction.Controllers
                 PurchaseName = lot.LotName,
                 Discription = lot.Discription,
                 StartCost = lot.StartCost,
+                CurrentCost = lot.CurrentCost,
                 AvatarPurchase = lot.AvatarLot,
                 Seller = lot.OwnerName,
-                User = _user.GetUserDB(_userManager.GetUserId(User)),
-                UserId = _userManager.GetUserId(User),
-                OwnerName = User.Identity.Name,
+                UserId = lot.CustomerId,
+                OwnerName = lot.CustomerName,
                 Status = false,
             };
             seller.Balance += lot.CurrentCost;
             customer.Balance -= lot.CurrentCost;
             lot.Status = false;
+            _lot.UpdateLot(lot);
             _purchase.AddPurchaseDB(purchase);
+            _purchase.UpdatePurchase(purchase);
+
+            await _userManager.UpdateAsync(seller);
+            await _userManager.UpdateAsync(customer);
 
             return RedirectToAction("MyLots", "Lot");
         }
@@ -90,15 +96,13 @@ namespace Auction.Controllers
         {
             Lot lot = _lot.GetLotDB(id);
             User seller = _user.GetUserDB(lot.UserId);
-            User customer = _user.GetUserDB(_userManager.GetUserId(User));
-
+           
             lot.CurrentCost += (lot.StartCost / 10);
             lot.CustomerId = _userManager.GetUserId(User);
             lot.CustomerName = User.Identity.Name;
+            _lot.UpdateLot(lot);
 
-            lot.Status = false;
-
-            return RedirectToAction("MyLots", "Lot");
+            return RedirectToAction("AllLots", "");
         }
 
         [HttpPost]

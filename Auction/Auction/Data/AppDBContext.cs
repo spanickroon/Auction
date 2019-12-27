@@ -15,7 +15,7 @@ namespace Auction.Data
 
         public AppDBContext(DbContextOptions<AppDBContext> options) : base(options)
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
         protected override void OnModelCreating(ModelBuilder model)

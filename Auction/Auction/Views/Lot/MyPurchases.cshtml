@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Auction.Data.Models.Purchase>
+@{
+    ViewData["Title"] = "MyPurchases";
+}
+
+<h1 class="text-center">My purcheses</h1>
+
+@foreach (var purchase in Model)
+{
+    <div class="card" style="height: auto; width: 500px; text-align: center; margin-left:auto; margin-right:auto">
+
+        @if (purchase.AvatarPurchase is null)
+        {
+            <h4>No photo</h4>
+        }
+        else
+        {
+            <img style="" width:100%" src="data:image/jpeg;base64,@(Convert.ToBase64String(purchase.AvatarPurchase))" alt="" class="card-img" />
+        }
+        <label>Name:</label>
+        <h1>@purchase.PurchaseName</h1>
+
+        <label>Discription:</label>
+        <h3>@purchase.Discription</h3>
+
+        <label>Seller:</label>
+        <h3>@purchase.OwnerName</h3>
+
+        <label>Cost:</label>
+        <h3>@purchase.CurrentCost $</h3>
+        
+        <label>Start Cost:</label>
+        <h3>@purchase.StartCost $</h3>
+
+        <label>Date:</label>
+        <h3>@purchase.DatePurchase</h3>
+
+        <label>Bought from</label>
+        <h3>@purchase.Seller</h3>
+    </div>
+    <br />
+}

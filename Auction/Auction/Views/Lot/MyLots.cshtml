@@ -28,7 +28,7 @@
     <h3>@lot.OwnerName</h3>
 
     <label>Current cost:</label>
-    @if (lot.CurrentCost != 0)
+    @if (lot.CurrentCost != lot.StartCost)
     {
         <h3>@lot.CurrentCost </h3>
         <label>Last bet:</label>
@@ -55,12 +55,16 @@
         <a class="btn btn-dark" style="color:white">Active</a>
         @if (!(lot.CustomerId is null))
         {
-            <a class="btn btn-success" style="color:white">Sell for @lot.CurrentCost $</a>
+            <form style="width:100%" asp-controller="Lot" asp-action="MakeTransaction" asp-route-id="@lot.Id" method="post">
+                <button style="width:100%" type="submit" class="btn btn-success">
+                    Sell for @lot.CurrentCost $
+                </button>
+            </form>
         }
     }
     else
     {
-        <a class="btn btn-dark" style="color:white">Not active</a>
+        <a class="btn btn-dark" style="color:white">Not active Sold to @lot.CustomerName</a>
     }
 
 </div>
